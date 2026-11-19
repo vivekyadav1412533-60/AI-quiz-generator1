@@ -1,526 +1,864 @@
 
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Black AI Quiz Generator</title>
+<title>QuizMaster AI Pro</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg,#000000,#101b35,#001d46);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-    color: white;
+body{
+ font-family:Arial,sans-serif;
+ background:#070d19;
+ color:white;
+ min-height:100vh;
 }
 
-.container {
-    width: 100%;
-    max-width: 650px;
-    background: #101827;
-    border: 1px solid #176bff;
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 0 30px #006eff35;
+header{
+ padding:22px;
+ background:#101d32;
+ border-bottom:1px solid #263d5e;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:12px;
 }
 
-header {
-    text-align: center;
-    margin-bottom: 25px;
+.logo{
+ font-size:25px;
+ font-weight:bold;
+ color:#42aaff;
 }
 
-header h1 {
-    color: #00aaff;
-    font-size: 28px;
-    margin-bottom: 8px;
-    text-shadow: 0 0 12px #007bff;
+.logo span{
+ color:white;
 }
 
-header p {
-    color: #9caec8;
+.header-tag{
+ background:#12345a;
+ padding:9px 15px;
+ border-radius:20px;
+ color:#66baff;
 }
 
-.info {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    flex-wrap: wrap;
-    background: #192b46;
-    color: #00b7ff;
-    padding: 14px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    font-weight: bold;
+.container{
+ max-width:1050px;
+ margin:35px auto;
+ padding:15px;
 }
 
-.progress {
-    height: 9px;
-    background: #263954;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 25px;
+.hero{
+ text-align:center;
+ margin-bottom:30px;
 }
 
-.progress-bar {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg,#007bff,#00d4ff);
-    transition: .3s;
+.hero h1{
+ font-size:38px;
+ margin-bottom:12px;
 }
 
-.question {
-    font-size: 21px;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 20px;
-    line-height: 1.5;
+.hero h1 span{
+ color:#37aaff;
 }
 
-.option {
-    display: block;
-    width: 100%;
-    padding: 14px;
-    margin: 10px 0;
-    border: 2px solid #263e60;
-    background: #19263a;
-    border-radius: 10px;
-    text-align: left;
-    font-size: 16px;
-    color: white;
-    cursor: pointer;
-    transition: .2s;
+.hero p{
+ color:#a8b9d0;
+ line-height:1.6;
 }
 
-.option:hover:not(:disabled) {
-    background: #173d68;
-    border-color: #00aaff;
+.card{
+ background:#101d32;
+ border:1px solid #263e60;
+ padding:25px;
+ border-radius:18px;
+ margin-bottom:22px;
+ box-shadow:0 10px 30px #0004;
 }
 
-.option.correct {
-    background: #064e3b;
-    border-color: #16a34a;
+.card h2{
+ color:#48b2ff;
+ margin-bottom:20px;
 }
 
-.option.wrong {
-    background: #601b25;
-    border-color: #ef4444;
+.subject-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
+ gap:12px;
 }
 
-.option:disabled {
-    cursor: not-allowed;
+.subject{
+ background:#172b47;
+ border:1px solid #345577;
+ padding:16px 8px;
+ border-radius:12px;
+ color:white;
+ cursor:pointer;
+ text-align:center;
+ transition:.2s;
 }
 
-#feedback {
-    font-weight: bold;
-    margin-top: 15px;
-    min-height: 25px;
+.subject:hover,.subject.active{
+ background:#1266ad;
+ border-color:#55b8ff;
+ transform:translateY(-3px);
 }
 
-button.main {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    background: linear-gradient(90deg,#006eff,#00aaff);
-    color: white;
-    border-radius: 10px;
-    font-size: 17px;
-    cursor: pointer;
-    margin-top: 18px;
-    font-weight: bold;
+.subject .emoji{
+ display:block;
+ font-size:28px;
+ margin-bottom:8px;
 }
 
-button.main:hover {
-    box-shadow: 0 0 15px #008cff;
+label{
+ display:block;
+ margin:15px 0 8px;
+ color:#b9cee6;
 }
 
-#quiz-screen, #result-screen {
-    display: none;
+select{
+ width:100%;
+ padding:14px;
+ background:#08162a;
+ border:1px solid #36577c;
+ border-radius:10px;
+ color:white;
+ font-size:16px;
 }
 
-.result {
-    text-align: center;
+button{
+ padding:13px 20px;
+ background:#1688ed;
+ color:white;
+ border:0;
+ border-radius:9px;
+ cursor:pointer;
+ font-size:15px;
+ font-weight:bold;
+ transition:.2s;
 }
 
-.result h2 {
-    color: #00aaff;
-    font-size: 30px;
+button:hover{
+ background:#0068c5;
 }
 
-.score {
-    color: #00c3ff;
-    font-size: 55px;
-    font-weight: bold;
-    margin: 20px;
-    text-shadow: 0 0 15px #007bff;
+.start-btn{
+ width:100%;
+ margin-top:22px;
+ padding:16px;
+ font-size:17px;
 }
 
-.footer {
-    text-align: center;
-    color: #71839e;
-    font-size: 12px;
-    margin-top: 20px;
+.stats{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
+ margin-bottom:20px;
+}
+
+.stat{
+ background:#172c48;
+ padding:17px 8px;
+ border-radius:12px;
+ text-align:center;
+}
+
+.stat strong{
+ display:block;
+ font-size:24px;
+ color:#42b2ff;
+ margin-bottom:6px;
+}
+
+.stat small{
+ color:#b4c9df;
+}
+
+#quizScreen,#resultScreen{
+ display:none;
+}
+
+.quiz-top{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ flex-wrap:wrap;
+ color:#bcd4ed;
+ margin-bottom:15px;
+}
+
+.timer{
+ color:#ffcb54;
+ font-weight:bold;
+}
+
+.progress{
+ width:100%;
+ height:9px;
+ background:#263c58;
+ border-radius:20px;
+ overflow:hidden;
+ margin:15px 0 25px;
+}
+
+.progress-bar{
+ height:100%;
+ width:0%;
+ background:#27a8ff;
+ transition:.3s;
+}
+
+.question{
+ font-size:22px;
+ line-height:1.5;
+ margin:20px 0;
+}
+
+.options{
+ display:grid;
+ gap:12px;
+}
+
+.option{
+ width:100%;
+ text-align:left;
+ background:#1b304c;
+ border:1px solid #355779;
+ padding:16px;
+}
+
+.option:hover{
+ background:#234c76;
+}
+
+.option.correct{
+ background:#126b42;
+ border:1px solid #42e49c;
+}
+
+.option.wrong{
+ background:#842c3b;
+ border:1px solid #ff6579;
+}
+
+.option:disabled{
+ cursor:default;
+}
+
+.feedback{
+ margin-top:18px;
+ min-height:25px;
+ font-weight:bold;
+ line-height:1.5;
+}
+
+.quiz-controls{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ margin-top:20px;
+}
+
+.result-score{
+ font-size:65px;
+ color:#43b5ff;
+ font-weight:bold;
+ text-align:center;
+ margin:25px 0;
+}
+
+.result-message{
+ text-align:center;
+ font-size:23px;
+ margin-bottom:15px;
+}
+
+.result-details{
+ text-align:center;
+ color:#bdd0e5;
+ line-height:2;
+}
+
+.result-actions{
+ display:flex;
+ justify-content:center;
+ gap:12px;
+ flex-wrap:wrap;
+ margin-top:25px;
+}
+
+.secondary{
+ background:#263c59;
+}
+
+footer{
+ text-align:center;
+ color:#7f99b7;
+ padding:30px 10px;
+}
+
+@media(max-width:600px){
+ .hero h1{font-size:29px}
+ .stats{grid-template-columns:1fr}
+ .question{font-size:19px}
+ header{justify-content:center}
+ .quiz-controls button{padding:12px 14px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
 <header>
-    <h1>⚡ BLACK AI QUIZ</h1>
-    <p>Test Your Science Knowledge!</p>
+ <div class="logo">🧠 QuizMaster <span>AI Pro</span></div>
+ <div class="header-tag">✦ Smart Learning Platform</div>
 </header>
 
-<div id="start-screen">
-    <h2>Welcome to Science Quiz!</h2>
+<div class="container">
 
-    <p style="margin-top:12px;color:#9caec8;line-height:1.6">
-        50 सवालों में से हर बार 10 Random Questions मिलेंगे।
-        अपना ज्ञान टेस्ट करें!
-    </p>
+ <div class="hero">
+  <h1>Welcome to <span>QuizMaster AI</span></h1>
+  <p>Choose your favourite subject, select difficulty and challenge yourself!</p>
+ </div>
 
-    <button class="main" onclick="startQuiz()">
-        START QUIZ 🚀
-    </button>
+ <div class="stats">
+  <div class="stat">
+   <strong>10+</strong>
+   <small>Subjects</small>
+  </div>
+  <div class="stat">
+   <strong>20</strong>
+   <small>Questions Per Quiz</small>
+  </div>
+  <div class="stat">
+   <strong>100%</strong>
+   <small>Learning Focus</small>
+  </div>
+ </div>
+
+ <section class="card" id="setupScreen">
+
+  <h2>📚 Choose Your Subject</h2>
+
+  <div class="subject-grid" id="subjects"></div>
+
+  <label>🎯 Difficulty Level</label>
+  <select id="difficulty">
+   <option>Easy</option>
+   <option selected>Medium</option>
+   <option>Hard</option>
+  </select>
+
+  <label>📝 Number of Questions</label>
+  <select id="count">
+   <option value="5">5 Questions</option>
+   <option value="10" selected>10 Questions</option>
+   <option value="15">15 Questions</option>
+   <option value="20">20 Questions</option>
+  </select>
+
+  <label>⏱️ Time Per Question</label>
+  <select id="timeLimit">
+   <option value="15">15 Seconds</option>
+   <option value="30" selected>30 Seconds</option>
+   <option value="60">60 Seconds</option>
+  </select>
+
+  <button class="start-btn" onclick="startQuiz()">
+   🚀 Generate My Quiz
+  </button>
+
+ </section>
+
+ <section class="card" id="quizScreen">
+
+  <div class="quiz-top">
+   <span id="quizSubject">Science Quiz</span>
+   <span class="timer" id="timer">⏱ 30s</span>
+  </div>
+
+  <div class="progress">
+   <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="quiz-top">
+   <span id="questionCount">Question 1/10</span>
+   <span id="liveScore">Score: 0</span>
+  </div>
+
+  <h2 class="question" id="question"></h2>
+
+  <div class="options" id="options"></div>
+
+  <div class="feedback" id="feedback"></div>
+
+  <div class="quiz-controls">
+   <button class="secondary" onclick="exitQuiz()">✕ Exit</button>
+   <button id="nextBtn" onclick="nextQuestion()" disabled>
+    Next ➜
+   </button>
+  </div>
+
+ </section>
+
+ <section class="card" id="resultScreen">
+
+  <h2 class="center">🏆 Your Quiz Result</h2>
+
+  <div class="result-score" id="finalScore">0/10</div>
+
+  <div class="result-message" id="resultMessage"></div>
+
+  <div class="result-details" id="resultDetails"></div>
+
+  <div class="result-actions">
+   <button onclick="restartQuiz()">🔄 Play Again</button>
+   <button class="secondary" onclick="home()">🏠 Home</button>
+  </div>
+
+ </section>
+
 </div>
 
-<div id="quiz-screen">
-
-    <div class="info">
-        <span id="question-number"></span>
-        <span>⏱️ <span id="timer">20</span>s</span>
-        <span id="score">Score: 0</span>
-    </div>
-
-    <div class="progress">
-        <div class="progress-bar" id="progress"></div>
-    </div>
-
-    <div class="question" id="question"></div>
-
-    <div id="options"></div>
-
-    <div id="feedback"></div>
-
-    <button class="main" id="next-btn"
-        onclick="nextQuestion()" style="display:none">
-        NEXT QUESTION ➜
-    </button>
-
-</div>
-
-<div id="result-screen" class="result">
-
-    <h2>🎉 QUIZ COMPLETED!</h2>
-
-    <div class="score" id="final-score">0/10</div>
-
-    <h3 id="result-message"></h3>
-
-    <p id="result-detail" style="margin-top:15px;color:#9caec8"></p>
-
-    <button class="main" onclick="startQuiz()">
-        🔄 PLAY AGAIN - NEW QUESTIONS
-    </button>
-
-</div>
-
-<div class="footer">
-    Made with ❤️ | BLACK AI QUIZ GENERATOR
-</div>
-
-</div>
+<footer>
+ QuizMaster AI Pro | Learn More • Practice More • Improve More
+</footer>
 
 <script>
 
-// 50 SCIENCE QUESTIONS
+const database = {
 
-const allQuestions = [
+Science:[
+["Which planet is known as the Red Planet?",["Mars","Venus","Jupiter","Earth"],0],
+["What is the chemical formula of water?",["CO2","H2O","O2","NaCl"],1],
+["Which gas do plants absorb?",["Oxygen","Nitrogen","Carbon Dioxide","Hydrogen"],2],
+["What is the boiling point of water?",["50°C","75°C","100°C","150°C"],2],
+["Which organ pumps blood?",["Brain","Heart","Lungs","Kidney"],1],
+["What is the nearest star to Earth?",["Sun","Sirius","Polaris","Vega"],0],
+["Which is the hardest natural substance?",["Iron","Gold","Diamond","Silver"],2],
+["Which vitamin is produced with sunlight exposure?",["A","B","C","D"],3],
+["How many bones are in an adult human body?",["106","206","306","406"],1],
+["Which force pulls objects towards Earth?",["Friction","Gravity","Magnetism","Pressure"],1],
+["What is the SI unit of force?",["Joule","Newton","Watt","Volt"],1],
+["Which state of matter has a fixed shape?",["Gas","Liquid","Solid","Plasma"],2],
+["Which gas is essential for human respiration?",["Oxygen","Helium","Neon","Methane"],0],
+["What is the centre of an atom called?",["Electron","Nucleus","Shell","Molecule"],1],
+["Which instrument measures temperature?",["Barometer","Thermometer","Ammeter","Compass"],1],
+["Which planet is famous for its rings?",["Mars","Saturn","Mercury","Venus"],1],
+["What is the main source of energy for Earth?",["Moon","Sun","Wind","Ocean"],1],
+["What is the chemical symbol for gold?",["Ag","Au","Fe","Go"],1],
+["Which part of the plant absorbs water?",["Flower","Leaf","Root","Fruit"],2],
+["How many planets are in our solar system?",["7","8","9","10"],1]
+],
 
-{q:"Which planet is known as the Red Planet?",o:["Earth","Mars","Jupiter","Venus"],a:1},
-{q:"What is the chemical formula of water?",o:["CO2","O2","H2O","NaCl"],a:2},
-{q:"Which gas do plants absorb?",o:["Oxygen","Nitrogen","Carbon Dioxide","Hydrogen"],a:2},
-{q:"Which organ pumps blood?",o:["Brain","Heart","Lungs","Kidney"],a:1},
-{q:"What is the nearest star to Earth?",o:["Moon","Sirius","Sun","Mars"],a:2},
-{q:"How many bones are in an adult human body?",o:["206","300","150","250"],a:0},
-{q:"Which vitamin do we get from sunlight?",o:["Vitamin A","Vitamin B","Vitamin C","Vitamin D"],a:3},
-{q:"What is the boiling point of water at sea level?",o:["50°C","100°C","150°C","200°C"],a:1},
-{q:"Which part of a plant absorbs water?",o:["Leaves","Flowers","Roots","Fruits"],a:2},
-{q:"Which is the largest planet?",o:["Earth","Mars","Saturn","Jupiter"],a:3},
-{q:"Which gas do humans need for respiration?",o:["Oxygen","Carbon dioxide","Helium","Methane"],a:0},
-{q:"What is the center of an atom called?",o:["Electron","Nucleus","Shell","Molecule"],a:1},
-{q:"Which is the hardest natural substance?",o:["Gold","Iron","Diamond","Silver"],a:2},
-{q:"How many planets are in our solar system?",o:["7","8","9","10"],a:1},
-{q:"Which organ helps us breathe?",o:["Heart","Lungs","Stomach","Brain"],a:1},
-{q:"What is the SI unit of force?",o:["Joule","Watt","Newton","Pascal"],a:2},
-{q:"Which planet is famous for its rings?",o:["Mars","Saturn","Mercury","Earth"],a:1},
-{q:"What is the freezing point of water?",o:["0°C","10°C","50°C","100°C"],a:0},
-{q:"Which part of the cell contains genetic material?",o:["Nucleus","Cell wall","Cytoplasm","Membrane"],a:0},
-{q:"Which blood cells help fight infection?",o:["Red cells","White cells","Platelets","Plasma"],a:1},
-{q:"What is the chemical symbol of Gold?",o:["Ag","Au","Fe","Go"],a:1},
-{q:"Which planet is closest to the Sun?",o:["Venus","Earth","Mercury","Mars"],a:2},
-{q:"What is the main source of energy for Earth?",o:["Moon","Sun","Stars","Wind"],a:1},
-{q:"Which instrument measures temperature?",o:["Barometer","Thermometer","Speedometer","Ammeter"],a:1},
-{q:"Which gas is most abundant in Earth's atmosphere?",o:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],a:1},
-{q:"What is the study of plants called?",o:["Zoology","Botany","Geology","Astronomy"],a:1},
-{q:"Which animal is a mammal?",o:["Shark","Dolphin","Crocodile","Frog"],a:1},
-{q:"What is the SI unit of electric current?",o:["Volt","Ampere","Ohm","Watt"],a:1},
-{q:"Which planet is called the Blue Planet?",o:["Mars","Earth","Saturn","Venus"],a:1},
-{q:"Which part of the eye controls light entering?",o:["Retina","Iris","Cornea","Lens"],a:1},
-{q:"What is the largest organ of the human body?",o:["Heart","Liver","Skin","Brain"],a:2},
-{q:"Which metal is liquid at room temperature?",o:["Iron","Mercury","Copper","Aluminium"],a:1},
-{q:"What do bees collect from flowers?",o:["Sand","Nectar","Leaves","Wood"],a:1},
-{q:"Which force pulls objects toward Earth?",o:["Friction","Magnetism","Gravity","Tension"],a:2},
-{q:"What is the unit of energy?",o:["Joule","Newton","Metre","Ampere"],a:0},
-{q:"Which part of a plant makes food?",o:["Root","Leaf","Stem","Flower"],a:1},
-{q:"Which gas supports burning?",o:["Oxygen","Nitrogen","Helium","Neon"],a:0},
-{q:"What is the chemical symbol of Iron?",o:["Ir","I","Fe","In"],a:2},
-{q:"Which planet has the Great Red Spot?",o:["Jupiter","Venus","Earth","Neptune"],a:0},
-{q:"Which sense organ helps us hear?",o:["Eye","Ear","Nose","Skin"],a:1},
-{q:"How many chambers does a human heart have?",o:["Two","Three","Four","Five"],a:2},
-{q:"Which part of the brain controls balance?",o:["Cerebellum","Cerebrum","Medulla","Thalamus"],a:0},
-{q:"What is the pH of pure water at 25°C?",o:["3","5","7","9"],a:2},
-{q:"Which instrument measures air pressure?",o:["Thermometer","Barometer","Hygrometer","Voltmeter"],a:1},
-{q:"What is the process by which plants make food?",o:["Respiration","Photosynthesis","Digestion","Fermentation"],a:1},
-{q:"What is the smallest unit of an element?",o:["Cell","Atom","Tissue","Organ"],a:1},
-{q:"Which vitamin is important for blood clotting?",o:["Vitamin A","Vitamin C","Vitamin K","Vitamin D"],a:2},
-{q:"Which layer protects Earth from much harmful UV radiation?",o:["Ozone layer","Core","Mantle","Crust"],a:0},
-{q:"What is the study of animals called?",o:["Botany","Zoology","Physics","Chemistry"],a:1},
-{q:"Which state of matter has fixed shape and volume?",o:["Liquid","Gas","Solid","Plasma"],a:2}
+Maths:[
+["What is 12 × 8?",["86","96","108","88"],1],
+["What is 144 ÷ 12?",["10","11","12","14"],2],
+["What is the square of 9?",["18","72","81","90"],2],
+["What is 25 + 35?",["50","60","65","55"],1],
+["What is 100 - 45?",["45","55","65","50"],1],
+["What is 7 × 7?",["42","48","49","56"],2],
+["What is half of 90?",["35","40","45","50"],2],
+["How many sides does a hexagon have?",["5","6","7","8"],1],
+["What is 15 × 3?",["30","35","45","50"],2],
+["What is 1/2 + 1/2?",["1","2","1/2","3"],0],
+["What is 15 squared?",["125","200","225","250"],2],
+["What is 20% of 100?",["10","15","20","25"],2],
+["What is 2 cubed?",["4","6","8","16"],2],
+["What is the perimeter of a square of side 5 cm?",["10 cm","15 cm","20 cm","25 cm"],2],
+["What is 81 divided by 9?",["7","8","9","10"],2],
+["What is 3/4 in decimal form?",["0.25","0.50","0.75","1.25"],2],
+["What is the value of 5 + 6 × 2?",["22","17","16","12"],1],
+["What is the square root of 169?",["11","12","13","14"],2],
+["What is 1 kilometre in metres?",["100","500","1000","10000"],2],
+["What is 30% of 200?",["30","40","60","80"],2]
+],
 
+English:[
+["What is the plural of Child?",["Childs","Children","Childes","Childrens"],1],
+["Choose the correct spelling.",["Apple","Aple","Appel","Appl"],0],
+["Opposite of Hot?",["Warm","Cold","Heat","Fire"],1],
+["What is a noun?",["Action word","Naming word","Describing word","Joining word"],1],
+["Past tense of Go?",["Goed","Gone","Went","Going"],2],
+["Choose the article: ___ Apple.",["A","An","Thee","No article"],1],
+["Opposite of Happy?",["Glad","Joyful","Sad","Smile"],2],
+["Which is a verb?",["Run","Beautiful","Table","Blue"],0],
+["Plural of Mouse?",["Mouses","Mice","Mouse","Mices"],1],
+["Synonym of Big?",["Tiny","Small","Large","Short"],2],
+["Which is an adjective?",["Quickly","Beautiful","Run","Eat"],1],
+["Past tense of Write?",["Writed","Written","Wrote","Writing"],2],
+["Which is a pronoun?",["He","Table","Jump","Blue"],0],
+["Opposite of Ancient?",["Old","Modern","Historic","Past"],1],
+["Which is an adverb?",["Slowly","Beautiful","House","Book"],0],
+["What is the comparative of Good?",["Gooder","Best","Better","More good"],2],
+["Which is a conjunction?",["And","Run","Blue","Quickly"],0],
+["Choose the correct sentence.",["She go to school.","She goes to school.","She going school.","She gone school."],1],
+["What is the plural of Foot?",["Foots","Feets","Feet","Footes"],2],
+["Which word is a preposition?",["Under","Run","Happy","Quick"],0]
+],
+
+Computer:[
+["What is the brain of a computer?",["Mouse","CPU","Keyboard","Monitor"],1],
+["What does RAM stand for?",["Random Access Memory","Read Access Memory","Run All Memory","Rapid Action Machine"],0],
+["Which device is used to type?",["Mouse","Monitor","Keyboard","Printer"],2],
+["Which is an operating system?",["Windows","Google","HTML","CPU"],0],
+["What does WWW stand for?",["World Wide Web","World Web Window","Wide World Work","Web World Wide"],0],
+["Which is an output device?",["Keyboard","Mouse","Monitor","Scanner"],2],
+["What is the full form of USB?",["Universal Serial Bus","United System Board","User Service Box","Universal Software Base"],0],
+["Which language structures web pages?",["HTML","CSS","SQL","Python"],0],
+["Which device stores data?",["Hard Disk","Mouse","Speaker","Monitor"],0],
+["What does AI stand for?",["Automatic Internet","Artificial Intelligence","Advanced Input","Applied Information"],1],
+["Which symbol starts a CSS ID selector?",[".","#","@","$"],1],
+["Which language is mainly used for styling web pages?",["HTML","CSS","SQL","C"],1],
+["Which is a web browser?",["Chrome","Excel","Windows","Photoshop"],0],
+["What is phishing?",["A cyber scam","A computer part","A programming language","A storage device"],0],
+["Which unit represents 8 bits?",["Byte","Kilobyte","Megabyte","Gigabyte"],0],
+["Which is a programming language?",["Python","Google","Windows","Chrome"],0],
+["What does URL stand for?",["Uniform Resource Locator","Universal Read Link","User Resource Line","Unified Record Link"],0],
+["Which key removes text to the left?",["Shift","Enter","Backspace","Tab"],2],
+["What is cloud computing?",["Using remote computing services","Turning off a computer","Printing documents","Changing screen brightness"],0],
+["Which extension is commonly used for HTML files?",[".jpg",".html",".mp3",".exe"],1]
+],
+
+GK:[
+["What is the national animal of India?",["Lion","Tiger","Elephant","Leopard"],1],
+["What is the currency of Japan?",["Dollar","Yuan","Yen","Euro"],2],
+["How many days are in a leap year?",["364","365","366","367"],2],
+["Which is India's national bird?",["Parrot","Peacock","Eagle","Sparrow"],1],
+["What is the capital of France?",["Rome","Paris","Berlin","Madrid"],1],
+["How many colours are in a rainbow?",["5","6","7","8"],2],
+["Which is the largest mammal?",["Elephant","Blue Whale","Giraffe","Shark"],1],
+["Which festival is known as the festival of lights?",["Holi","Diwali","Eid","Christmas"],1],
+["Which is India's national flower?",["Rose","Lotus","Sunflower","Jasmine"],1],
+["Which is the largest country by area?",["India","Russia","China","Canada"],1],
+["Who wrote India's national anthem?",["Tagore","Premchand","Nehru","Gandhi"],0],
+["What is the capital of Australia?",["Sydney","Melbourne","Canberra","Perth"],2],
+["Which is the largest planet?",["Earth","Mars","Jupiter","Saturn"],2],
+["Which is the fastest land animal?",["Lion","Cheetah","Horse","Tiger"],1],
+["How many players are there in a cricket team?",["9","10","11","12"],2],
+["What is the national aquatic animal of India?",["Shark","Ganges river dolphin","Turtle","Whale"],1],
+["Which planet is closest to the Sun?",["Venus","Mercury","Mars","Earth"],1],
+["Which is the longest river in India?",["Ganga","Yamuna","Narmada","Kaveri"],0],
+["What is the capital of Japan?",["Kyoto","Tokyo","Osaka","Hiroshima"],1],
+["Which is the largest ocean?",["Atlantic","Indian","Pacific","Arctic"],2]
+]
+
+};
+
+// Other subjects use additional question banks.
+// This keeps each subject independent and expandable.
+
+database.History = [
+["Who was the first Mughal emperor in India?",["Akbar","Babur","Humayun","Shah Jahan"],1],
+["When did India become independent?",["1945","1947","1950","1930"],1],
+["Who built the Taj Mahal?",["Akbar","Babur","Shah Jahan","Aurangzeb"],2],
+["Who led the Dandi March?",["Gandhi","Nehru","Patel","Bose"],0],
+["Who was the first Prime Minister of India?",["Gandhi","Nehru","Patel","Rajendra Prasad"],1],
+["When was the Battle of Plassey?",["1757","1857","1764","1947"],0],
+["Who founded the Maurya Empire?",["Ashoka","Chandragupta Maurya","Harsha","Akbar"],1],
+["Who was the last Mughal emperor?",["Akbar II","Bahadur Shah Zafar","Aurangzeb","Jahangir"],1],
+["Who gave the slogan Jai Jawan Jai Kisan?",["Nehru","Lal Bahadur Shastri","Gandhi","Bose"],1],
+["Who was known as the Iron Man of India?",["Nehru","Sardar Patel","Tilak","Bose"],1]
 ];
 
-let questions = [];
-let current = 0;
-let score = 0;
-let time = 20;
+database.Geography = [
+["Which is the largest continent?",["Africa","Asia","Europe","Australia"],1],
+["Which is the largest ocean?",["Indian","Atlantic","Pacific","Arctic"],2],
+["Which is the highest mountain?",["K2","Mount Everest","Kilimanjaro","Nanda Devi"],1],
+["What is the capital of India?",["Mumbai","New Delhi","Kolkata","Chennai"],1],
+["Which river is a major tributary of Ganga?",["Yamuna","Godavari","Kaveri","Narmada"],0],
+["Which is the largest hot desert?",["Gobi","Sahara","Thar","Kalahari"],1],
+["How many continents are there?",["5","6","7","8"],2],
+["Which is the smallest continent?",["Europe","Australia","Asia","Africa"],1],
+["Which planet is called the Blue Planet?",["Mars","Earth","Venus","Mercury"],1],
+["Which country has the largest area?",["India","Russia","Japan","Germany"],1]
+];
+
+database.Biology = [
+["Which organ helps us breathe?",["Heart","Lungs","Kidney","Liver"],1],
+["What is the basic unit of life?",["Tissue","Cell","Organ","Atom"],1],
+["Which blood cells carry oxygen?",["White cells","Red cells","Platelets","Plasma"],1],
+["Which organ controls the body?",["Heart","Brain","Lungs","Stomach"],1],
+["Where does photosynthesis occur?",["Roots","Leaves","Flowers","Fruits"],1],
+["What is the largest human organ?",["Heart","Skin","Liver","Brain"],1],
+["Which cell part contains most DNA?",["Nucleus","Cell wall","Cytoplasm","Membrane"],0],
+["How many chambers does the human heart have?",["2","3","4","5"],2],
+["Which vitamin helps blood clotting?",["A","C","D","K"],3],
+["Which system transports blood?",["Digestive","Circulatory","Nervous","Respiratory"],1]
+];
+
+database.Physics = [
+["What is the SI unit of force?",["Joule","Newton","Watt","Pascal"],1],
+["What is the approximate speed of light?",["300,000 km/s","150 km/s","1,000 km/s","30 km/s"],0],
+["Which instrument measures temperature?",["Barometer","Thermometer","Ammeter","Voltmeter"],1],
+["What is the SI unit of energy?",["Newton","Joule","Watt","Metre"],1],
+["Which force pulls objects towards Earth?",["Friction","Gravity","Magnetism","Tension"],1],
+["What is the SI unit of electric current?",["Volt","Ampere","Ohm","Watt"],1],
+["Sound travels fastest in which medium?",["Vacuum","Air","Water","Solids"],3],
+["Which lens is used in a magnifying glass?",["Concave","Convex","Plane","Cylindrical"],1],
+["What is the SI unit of power?",["Watt","Joule","Newton","Volt"],0],
+["Which energy comes from the Sun?",["Solar","Chemical","Nuclear","Sound"],0]
+];
+
+database.Hindi = [
+["'सूर्य' का पर्यायवाची शब्द क्या है?",["चंद्रमा","रवि","पृथ्वी","जल"],1],
+["'दिन' का विलोम शब्द क्या है?",["सुबह","शाम","रात","दोपहर"],2],
+["संज्ञा किसे कहते हैं?",["नाम बताने वाला शब्द","काम बताने वाला शब्द","गुण बताने वाला शब्द","इनमें से कोई नहीं"],0],
+["'जल' का अर्थ क्या है?",["हवा","पानी","आग","धरती"],1],
+["'अंधकार' का विलोम क्या है?",["रात","प्रकाश","छाया","बादल"],1],
+["'पुस्तक' का बहुवचन क्या है?",["पुस्तकें","पुस्तकों","पुस्तक","पुस्तका"],0],
+["'कमल' किसका नाम है?",["फल","फूल","पक्षी","नदी"],1],
+["'मीठा' का विलोम क्या है?",["खट्टा","कड़वा","नमकीन","तीखा"],1],
+["'पृथ्वी' का पर्यायवाची क्या है?",["धरती","आकाश","जल","अग्नि"],0],
+["'सुंदर' का विलोम क्या है?",["अच्छा","कुरूप","मधुर","साफ"],1]
+];
+
+const subjectList = [
+["Science","🔬"],["Maths","➗"],["English","📖"],
+["Hindi","📝"],["Computer","💻"],["History","🏛️"],
+["Geography","🌍"],["GK","🌟"],["Biology","🧬"],
+["Physics","⚡"]
+];
+
+let selectedSubject="Science";
+let questions=[];
+let current=0;
+let score=0;
 let timer;
-let answered = false;
+let timeLeft=30;
+let answered=false;
+let correctCount=0;
 
-// RANDOM QUESTIONS
+const $=id=>document.getElementById(id);
 
-function getRandomQuestions() {
+function makeSubjects(){
+ $("subjects").innerHTML="";
 
-    let shuffled = [...allQuestions];
+ subjectList.forEach(([name,emoji])=>{
+  const btn=document.createElement("button");
+  btn.className="subject"+(name===selectedSubject?" active":"");
+  btn.innerHTML=`<span class="emoji">${emoji}</span>${name}`;
 
-    for(let i = shuffled.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
+  btn.onclick=()=>{
+   selectedSubject=name;
+   document.querySelectorAll(".subject").forEach(b=>b.classList.remove("active"));
+   btn.classList.add("active");
+  };
 
-        [shuffled[i], shuffled[j]] =
-        [shuffled[j], shuffled[i]];
-    }
-
-    return shuffled.slice(0,10);
+  $("subjects").appendChild(btn);
+ });
 }
 
-// START QUIZ
+makeSubjects();
 
-function startQuiz() {
-
-    clearInterval(timer);
-
-    questions = getRandomQuestions();
-
-    current = 0;
-    score = 0;
-
-    document.getElementById("start-screen").style.display = "none";
-    document.getElementById("result-screen").style.display = "none";
-    document.getElementById("quiz-screen").style.display = "block";
-
-    showQuestion();
+function shuffle(array){
+ return [...array].sort(()=>Math.random()-0.5);
 }
 
-// SHOW QUESTION
+function startQuiz(){
 
-function showQuestion() {
+ const count=Number($("count").value);
 
-    clearInterval(timer);
+ let bank=database[selectedSubject];
 
-    answered = false;
-    time = 20;
+ // Repeat safely if a subject has fewer questions.
+ questions=shuffle(bank);
 
-    let q = questions[current];
+ while(questions.length<count){
+  questions=questions.concat(shuffle(bank));
+ }
 
-    document.getElementById("question-number").innerText =
-        `Question ${current+1}/10`;
+ questions=questions.slice(0,count);
 
-    document.getElementById("timer").innerText = time;
+ current=0;
+ score=0;
+ correctCount=0;
 
-    document.getElementById("score").innerText =
-        "Score: " + score;
+ $("setupScreen").style.display="none";
+ $("resultScreen").style.display="none";
+ $("quizScreen").style.display="block";
 
-    document.getElementById("question").innerText = q.q;
+ $("quizSubject").textContent=selectedSubject+" Quiz";
 
-    document.getElementById("progress").style.width =
-        (current / 10 * 100) + "%";
-
-    document.getElementById("feedback").innerText = "";
-
-    document.getElementById("next-btn").style.display = "none";
-
-    let html = "";
-
-    q.o.forEach((option,index) => {
-
-        html += `
-        <button class="option" onclick="checkAnswer(${index})">
-        ${String.fromCharCode(65+index)}. ${option}
-        </button>`;
-
-    });
-
-    document.getElementById("options").innerHTML = html;
-
-    timer = setInterval(() => {
-
-        time--;
-
-        document.getElementById("timer").innerText = time;
-
-        if(time <= 0) {
-            clearInterval(timer);
-            timeUp();
-        }
-
-    },1000);
+ showQuestion();
 }
 
-// CHECK ANSWER
+function showQuestion(){
 
-function checkAnswer(selected) {
+ clearInterval(timer);
+ answered=false;
 
-    if(answered) return;
+ let q=questions[current];
 
-    answered = true;
-    clearInterval(timer);
+ $("questionCount").textContent=
+ "Question "+(current+1)+" / "+questions.length;
 
-    let q = questions[current];
+ $("liveScore").textContent="Score: "+score;
 
-    let buttons = document.querySelectorAll(".option");
+ $("progressBar").style.width=
+ (current/questions.length*100)+"%";
 
-    buttons.forEach((btn,index) => {
+ $("question").textContent=q[0];
 
-        btn.disabled = true;
+ $("feedback").textContent="";
+ $("nextBtn").disabled=true;
 
-        if(index === q.a) {
-            btn.classList.add("correct");
-        }
+ $("nextBtn").textContent=
+ current===questions.length-1?"View Result 🏆":"Next ➜";
 
-        if(index === selected && selected !== q.a) {
-            btn.classList.add("wrong");
-        }
+ $("options").innerHTML="";
 
-    });
+ q[1].forEach((option,index)=>{
 
-    if(selected === q.a) {
+  let btn=document.createElement("button");
 
-        score++;
+  btn.className="option";
+  btn.textContent=
+  String.fromCharCode(65+index)+". "+option;
 
-        document.getElementById("feedback").innerText =
-            "✅ Correct Answer! Well Done!";
+  btn.onclick=()=>selectAnswer(index,btn);
 
-        document.getElementById("feedback").style.color = "#22c55e";
+  $("options").appendChild(btn);
 
-    } else {
+ });
 
-        document.getElementById("feedback").innerText =
-            "❌ Wrong Answer! Correct: " + q.o[q.a];
+ timeLeft=Number($("timeLimit").value);
+ updateTimer();
 
-        document.getElementById("feedback").style.color = "#ef4444";
+ timer=setInterval(()=>{
+  timeLeft--;
+  updateTimer();
 
-    }
+  if(timeLeft<=0){
+   clearInterval(timer);
+   if(!answered) timeUp();
+  }
+ },1000);
 
-    document.getElementById("score").innerText =
-        "Score: " + score;
-
-    document.getElementById("next-btn").style.display = "block";
 }
 
-// TIME UP
-
-function timeUp() {
-
-    if(answered) return;
-
-    answered = true;
-
-    let q = questions[current];
-
-    let buttons = document.querySelectorAll(".option");
-
-    buttons.forEach((btn,index) => {
-
-        btn.disabled = true;
-
-        if(index === q.a) {
-            btn.classList.add("correct");
-        }
-
-    });
-
-    document.getElementById("feedback").innerText =
-        "⏰ Time Up! Correct: " + q.o[q.a];
-
-    document.getElementById("feedback").style.color = "#ef4444";
-
-    document.getElementById("next-btn").style.display = "block";
+function updateTimer(){
+ $("timer").textContent="⏱ "+timeLeft+"s";
 }
 
-// NEXT QUESTION
+function selectAnswer(index,button){
 
-function nextQuestion() {
+ if(answered)return;
 
-    current++;
+ answered=true;
+ clearInterval(timer);
 
-    if(current < questions.length) {
-        showQuestion();
-    } else {
-        showResult();
-    }
+ let q=questions[current];
+ let correct=q[2];
+
+ document.querySelectorAll(".option").forEach((btn,i)=>{
+  btn.disabled=true;
+  if(i===correct)btn.classList.add("correct");
+ });
+
+ if(index===correct){
+  score++;
+  correctCount++;
+
+  $("feedback").textContent="✅ Correct Answer! Excellent!";
+  $("feedback").style.color="#42e49c";
+ }else{
+  button.classList.add("wrong");
+
+  $("feedback").textContent=
+  "❌ Wrong! Correct answer: "+q[1][correct];
+
+  $("feedback").style.color="#ff8290";
+ }
+
+ $("liveScore").textContent="Score: "+score;
+ $("nextBtn").disabled=false;
 }
 
-// RESULT
+function timeUp(){
 
-function showResult() {
+ answered=true;
 
-    clearInterval(timer);
+ let q=questions[current];
 
-    document.getElementById("quiz-screen").style.display = "none";
-    document.getElementById("result-screen").style.display = "block";
+ document.querySelectorAll(".option").forEach((btn,i)=>{
+  btn.disabled=true;
+  if(i===q[2])btn.classList.add("correct");
+ });
 
-    document.getElementById("final-score").innerText =
-        score + "/10";
+ $("feedback").textContent=
+ "⏰ Time Up! Correct answer: "+q[1][q[2]];
 
-    let percentage = score * 10;
+ $("feedback").style.color="#ffca58";
 
-    let message;
+ $("nextBtn").disabled=false;
+}
 
-    if(percentage >= 80) {
-        message = "🏆 Excellent! Amazing Work!";
-    } else if(percentage >= 50) {
-        message = "👏 Good Job! Keep Learning!";
-    } else {
-        message = "💪 Keep Practicing!";
-    }
+function nextQuestion(){
 
-    document.getElementById("result-message").innerText = message;
+ if(!answered)return;
 
-    document.getElementById("result-detail").innerText =
-        "Your Percentage: " + percentage + "%";
+ clearInterval(timer);
 
-    document.getElementById("progress").style.width = "100%";
+ current++;
+
+ if(current<questions.length){
+  showQuestion();
+ }else{
+  showResult();
+ }
+}
+
+function showResult(){
+
+ clearInterval(timer);
+
+ $("quizScreen").style.display="none";
+ $("resultScreen").style.display="block";
+
+ let total=questions.length;
+ let percentage=Math.round(score/total*100);
+
+ $("finalScore").textContent=score+"/"+total;
+
+ let message="";
+
+ if(percentage===100)message="🏆 Perfect Score! Amazing!";
+ else if(percentage>=80)message="🌟 Excellent Performance!";
+ else if(percentage>=60)message="🎉 Great Job!";
+ else if(percentage>=40)message="👍 Good Try! Keep Practicing!";
+ else message="📚 Keep Learning and Try Again!";
+
+ $("resultMessage").textContent=message;
+
+ $("resultDetails").innerHTML=
+ "📚 Subject: "+selectedSubject+
+ "<br>✅ Correct Answers: "+score+
+ "<br>❌ Wrong Answers: "+(total-score)+
+ "<br>📊 Percentage: "+percentage+"%"+
+ "<br>🎯 Difficulty: "+$("difficulty").value;
+}
+
+function restartQuiz(){
+ startQuiz();
+}
+
+function home(){
+ clearInterval(timer);
+ $("resultScreen").style.display="none";
+ $("quizScreen").style.display="none";
+ $("setupScreen").style.display="block";
+}
+
+function exitQuiz(){
+ clearInterval(timer);
+ home();
 }
 
 </script>
