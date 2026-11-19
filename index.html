@@ -1,11 +1,10 @@
-# AI-quiz-generator1
 
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Quiz Generator</title>
+<title>Blue AI Quiz Generator</title>
 
 <style>
 * {
@@ -16,49 +15,70 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #001f5c, #008cff);
-    color: white;
+    background: linear-gradient(135deg,#001b49,#007bff);
     min-height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     padding: 15px;
 }
 
 .container {
-    background: #ffffff;
-    color: #123;
     width: 100%;
-    max-width: 600px;
-    padding: 30px;
+    max-width: 650px;
+    background: white;
     border-radius: 20px;
-    box-shadow: 0 10px 30px #001b4d88;
+    padding: 25px;
+    box-shadow: 0 10px 35px #001b4970;
 }
 
-h1 {
+header {
     text-align: center;
-    color: #0066cc;
-    margin-bottom: 10px;
-}
-
-.subtitle {
-    text-align: center;
-    color: #555;
     margin-bottom: 25px;
 }
 
-.top {
+header h1 {
+    color: #006aff;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #64748b;
+}
+
+.info {
     display: flex;
     justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    background: #eaf3ff;
+    color: #0055cc;
+    padding: 13px;
+    border-radius: 10px;
     margin-bottom: 20px;
-    color: #0066cc;
     font-weight: bold;
 }
 
-#question {
+.progress {
+    height: 9px;
+    background: #dceaff;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: #007bff;
+    transition: .3s;
+}
+
+.question {
     font-size: 21px;
+    font-weight: bold;
+    color: #17345a;
     margin-bottom: 20px;
-    color: #123;
 }
 
 .option {
@@ -66,73 +86,81 @@ h1 {
     width: 100%;
     padding: 14px;
     margin: 10px 0;
-    border: 2px solid #c9e2ff;
+    border: 2px solid #d7e6ff;
+    background: #f5f9ff;
     border-radius: 10px;
-    background: #f4f9ff;
-    cursor: pointer;
     text-align: left;
     font-size: 16px;
-    transition: 0.2s;
+    color: #183456;
+    cursor: pointer;
 }
 
 .option:hover:not(:disabled) {
-    background: #dceeff;
+    background: #e2efff;
     border-color: #007bff;
 }
 
+.option.correct {
+    background: #d1fae5;
+    border-color: #16a34a;
+}
+
+.option.wrong {
+    background: #fee2e2;
+    border-color: #dc2626;
+}
+
 .option:disabled {
-    cursor: default;
+    cursor: not-allowed;
 }
 
-.correct {
-    background: #c8f7d2;
-    border-color: green;
-}
-
-.wrong {
-    background: #ffd4d4;
-    border-color: red;
-}
-
-button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 14px 25px;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
+#feedback {
+    font-weight: bold;
     margin-top: 15px;
+    min-height: 25px;
+}
+
+button.main {
     width: 100%;
+    padding: 14px;
+    border: none;
+    background: #006eff;
+    color: white;
+    border-radius: 10px;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 18px;
 }
 
-button:hover {
-    background: #0056b3;
+button.main:hover {
+    background: #004fc4;
 }
 
-#result {
-    text-align: center;
+#quiz-screen, #result-screen {
     display: none;
 }
 
-#result h2 {
-    color: #0066cc;
-    margin-bottom: 15px;
+.result {
+    text-align: center;
 }
 
-#progress {
-    height: 9px;
-    background: #ddd;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    overflow: hidden;
+.result h2 {
+    color: #006eff;
+    font-size: 30px;
 }
 
-#bar {
-    height: 100%;
-    width: 0%;
-    background: #007bff;
-    transition: 0.3s;
+.score {
+    color: #007bff;
+    font-size: 55px;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.footer {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 12px;
+    margin-top: 20px;
 }
 </style>
 </head>
@@ -141,205 +169,452 @@ button:hover {
 
 <div class="container">
 
-    <h1>🧠 AI Quiz Generator</h1>
-    <p class="subtitle">Test Your Science Knowledge!</p>
+<header>
+    <h1>🚀 AI Quiz Generator</h1>
+    <p>Test Your Science Knowledge!</p>
+</header>
 
-    <div id="quiz">
+<div id="start-screen">
+    <h2>Welcome to Science Quiz!</h2>
+    <p style="margin-top:12px;color:#64748b;line-height:1.6">
+        हर बार 50 सवालों में से 10 नए Random Questions मिलेंगे।
+    </p>
 
-        <div class="top">
-            <span id="count">Question 1/10</span>
-            <span id="score">Score: 0</span>
-        </div>
+    <button class="main" onclick="startQuiz()">
+        Start Quiz 🚀
+    </button>
+</div>
 
-        <div id="progress">
-            <div id="bar"></div>
-        </div>
+<div id="quiz-screen">
 
-        <h2 id="question"></h2>
-
-        <div id="options"></div>
-
-        <button id="next" onclick="nextQuestion()" disabled>
-            Next Question →
-        </button>
-
+    <div class="info">
+        <span id="question-number"></span>
+        <span>⏱️ <span id="timer">20</span>s</span>
+        <span id="score">Score: 0</span>
     </div>
 
-    <div id="result">
-        <h2>🎉 Quiz Completed!</h2>
-        <h3 id="finalScore"></h3>
-        <p id="message"></p>
-        <button onclick="restartQuiz()">Play Again 🔄</button>
+    <div class="progress">
+        <div class="progress-bar" id="progress"></div>
     </div>
+
+    <div class="question" id="question"></div>
+
+    <div id="options"></div>
+
+    <div id="feedback"></div>
+
+    <button class="main" id="next-btn"
+        onclick="nextQuestion()" style="display:none">
+        Next Question ➜
+    </button>
+
+</div>
+
+<div id="result-screen" class="result">
+
+    <h2>🎉 Quiz Completed!</h2>
+
+    <div class="score" id="final-score">0/10</div>
+
+    <h3 id="result-message"></h3>
+
+    <p id="result-detail" style="margin-top:15px"></p>
+
+    <button class="main" onclick="startQuiz()">
+        🔄 Play Again - New Questions
+    </button>
+
+</div>
+
+<div class="footer">
+    Made with ❤️ | Blue Quiz Generator
+</div>
 
 </div>
 
 <script>
 
-const questions = [
-{
-q: "Which planet is known as the Red Planet?",
-options: ["Earth", "Mars", "Jupiter", "Venus"],
-answer: 1
-},
-{
-q: "Which gas do plants absorb?",
-options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"],
-answer: 2
-},
-{
-q: "What is the chemical formula of water?",
-options: ["CO2", "H2O", "O2", "NaCl"],
-answer: 1
-},
-{
-q: "Which organ pumps blood in the human body?",
-options: ["Brain", "Lungs", "Heart", "Kidney"],
-answer: 2
-},
-{
-q: "What is the nearest star to Earth?",
-options: ["Sirius", "Sun", "Polaris", "Vega"],
-answer: 1
-},
-{
-q: "How many bones are there in an adult human body?",
-options: ["206", "300", "150", "250"],
-answer: 0
-},
-{
-q: "Which part of a plant absorbs water?",
-options: ["Leaves", "Flowers", "Roots", "Fruits"],
-answer: 2
-},
-{
-q: "What force pulls objects toward Earth?",
-options: ["Friction", "Gravity", "Magnetism", "Electricity"],
-answer: 1
-},
-{
-q: "Which vitamin is produced in the skin with sunlight exposure?",
-options: ["Vitamin A", "Vitamin B12", "Vitamin C", "Vitamin D"],
-answer: 3
-},
-{
-q: "Which is the largest planet in our solar system?",
-options: ["Earth", "Saturn", "Jupiter", "Mars"],
-answer: 2
-}
+// 50 SCIENCE QUESTIONS
+
+const allQuestions = [
+
+{q:"Which planet is known as the Red Planet?",
+o:["Earth","Mars","Jupiter","Venus"],a:1},
+
+{q:"What is the chemical formula of water?",
+o:["CO2","O2","H2O","NaCl"],a:2},
+
+{q:"Which gas do plants absorb?",
+o:["Oxygen","Nitrogen","Carbon Dioxide","Hydrogen"],a:2},
+
+{q:"Which organ pumps blood?",
+o:["Brain","Heart","Lungs","Kidney"],a:1},
+
+{q:"What is the nearest star to Earth?",
+o:["Moon","Sirius","Sun","Mars"],a:2},
+
+{q:"How many bones are in an adult human body?",
+o:["206","300","150","250"],a:0},
+
+{q:"Which vitamin do we get from sunlight?",
+o:["Vitamin A","Vitamin B","Vitamin C","Vitamin D"],a:3},
+
+{q:"What is the boiling point of water at sea level?",
+o:["50°C","100°C","150°C","200°C"],a:1},
+
+{q:"Which part of a plant absorbs water?",
+o:["Leaves","Flowers","Roots","Fruits"],a:2},
+
+{q:"Which is the largest planet?",
+o:["Earth","Mars","Saturn","Jupiter"],a:3},
+
+{q:"Which gas do humans breathe in for respiration?",
+o:["Oxygen","Carbon dioxide","Helium","Methane"],a:0},
+
+{q:"What is the center of an atom called?",
+o:["Electron","Nucleus","Shell","Molecule"],a:1},
+
+{q:"Which is the hardest natural substance?",
+o:["Gold","Iron","Diamond","Silver"],a:2},
+
+{q:"How many planets are in our solar system?",
+o:["7","8","9","10"],a:1},
+
+{q:"Which organ helps us to breathe?",
+o:["Heart","Lungs","Stomach","Brain"],a:1},
+
+{q:"What is the SI unit of force?",
+o:["Joule","Watt","Newton","Pascal"],a:2},
+
+{q:"Which planet is famous for its rings?",
+o:["Mars","Saturn","Mercury","Earth"],a:1},
+
+{q:"What is the freezing point of water?",
+o:["0°C","10°C","50°C","100°C"],a:0},
+
+{q:"Which part of the cell contains genetic material?",
+o:["Nucleus","Cell wall","Cytoplasm","Membrane"],a:0},
+
+{q:"Which blood cells help fight infection?",
+o:["Red cells","White cells","Platelets","Plasma"],a:1},
+
+{q:"What is the chemical symbol of Gold?",
+o:["Ag","Au","Fe","Go"],a:1},
+
+{q:"Which planet is closest to the Sun?",
+o:["Venus","Earth","Mercury","Mars"],a:2},
+
+{q:"What is the main source of energy for Earth?",
+o:["Moon","Sun","Stars","Wind"],a:1},
+
+{q:"Which instrument measures temperature?",
+o:["Barometer","Thermometer","Speedometer","Ammeter"],a:1},
+
+{q:"Which gas is most abundant in Earth's atmosphere?",
+o:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],a:1},
+
+{q:"What is the study of plants called?",
+o:["Zoology","Botany","Geology","Astronomy"],a:1},
+
+{q:"Which animal is a mammal?",
+o:["Shark","Dolphin","Crocodile","Frog"],a:1},
+
+{q:"What is the SI unit of electric current?",
+o:["Volt","Ampere","Ohm","Watt"],a:1},
+
+{q:"Which planet is called the Blue Planet?",
+o:["Mars","Earth","Saturn","Venus"],a:1},
+
+{q:"Which part of the eye controls the amount of light entering?",
+o:["Retina","Iris","Cornea","Lens"],a:1},
+
+{q:"What is the largest organ of the human body?",
+o:["Heart","Liver","Skin","Brain"],a:2},
+
+{q:"Which metal is liquid at room temperature?",
+o:["Iron","Mercury","Copper","Aluminium"],a:1},
+
+{q:"What do bees collect from flowers?",
+o:["Sand","Nectar","Water only","Leaves"],a:1},
+
+{q:"Which force pulls objects toward Earth?",
+o:["Friction","Magnetism","Gravity","Tension"],a:2},
+
+{q:"What is the unit of energy?",
+o:["Joule","Newton","Metre","Ampere"],a:0},
+
+{q:"Which part of a plant makes food?",
+o:["Root","Leaf","Stem","Flower"],a:1},
+
+{q:"Which gas is needed for burning?",
+o:["Oxygen","Nitrogen","Helium","Neon"],a:0},
+
+{q:"What is the chemical symbol of Iron?",
+o:["Ir","I","Fe","In"],a:2},
+
+{q:"Which planet has the Great Red Spot?",
+o:["Jupiter","Venus","Earth","Neptune"],a:0},
+
+{q:"Which sense organ helps us hear?",
+o:["Eye","Ear","Nose","Skin"],a:1},
+
+{q:"How many chambers does a human heart have?",
+o:["Two","Three","Four","Five"],a:2},
+
+{q:"Which part of the brain controls balance?",
+o:["Cerebellum","Cerebrum","Medulla","Thalamus"],a:0},
+
+{q:"What is the pH of pure water at 25°C?",
+o:["3","5","7","9"],a:2},
+
+{q:"Which instrument measures air pressure?",
+o:["Thermometer","Barometer","Hygrometer","Voltmeter"],a:1},
+
+{q:"What is the process by which plants make food?",
+o:["Respiration","Photosynthesis","Digestion","Fermentation"],a:1},
+
+{q:"Which is the smallest unit of an element?",
+o:["Cell","Atom","Tissue","Organ"],a:1},
+
+{q:"Which vitamin is important for blood clotting?",
+o:["Vitamin A","Vitamin C","Vitamin K","Vitamin D"],a:2},
+
+{q:"Which layer protects Earth from much harmful UV radiation?",
+o:["Ozone layer","Core","Mantle","Crust"],a:0},
+
+{q:"What is the study of animals called?",
+o:["Botany","Zoology","Physics","Chemistry"],a:1},
+
+{q:"Which state of matter has a fixed shape and volume?",
+o:["Liquid","Gas","Solid","Plasma"],a:2}
+
 ];
 
+let questions = [];
 let current = 0;
 let score = 0;
+let time = 20;
+let timer;
 let answered = false;
 
-function loadQuestion() {
+// RANDOM QUESTIONS SELECT
+
+function getRandomQuestions() {
+
+    let shuffled = [...allQuestions];
+
+    for(let i = shuffled.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] =
+        [shuffled[j], shuffled[i]];
+    }
+
+    return shuffled.slice(0,10);
+}
+
+// START QUIZ
+
+function startQuiz() {
+
+    clearInterval(timer);
+
+    questions = getRandomQuestions();
+
+    current = 0;
+    score = 0;
+
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "none";
+    document.getElementById("quiz-screen").style.display = "block";
+
+    showQuestion();
+}
+
+// SHOW QUESTION
+
+function showQuestion() {
+
+    clearInterval(timer);
 
     answered = false;
-
-    document.getElementById("next").disabled = true;
+    time = 20;
 
     let q = questions[current];
 
-    document.getElementById("count").innerText =
-        `Question ${current + 1}/10`;
+    document.getElementById("question-number").innerText =
+        `Question ${current+1}/10`;
+
+    document.getElementById("timer").innerText = time;
 
     document.getElementById("score").innerText =
-        `Score: ${score}`;
+        "Score: " + score;
 
     document.getElementById("question").innerText = q.q;
 
-    document.getElementById("bar").style.width =
-        (current / questions.length * 100) + "%";
+    document.getElementById("progress").style.width =
+        (current / 10 * 100) + "%";
 
-    let options = document.getElementById("options");
-    options.innerHTML = "";
+    document.getElementById("feedback").innerText = "";
 
-    q.options.forEach((option, index) => {
+    document.getElementById("next-btn").style.display = "none";
 
-        let btn = document.createElement("button");
+    let html = "";
 
-        btn.className = "option";
-        btn.innerText = String.fromCharCode(65 + index) + ". " + option;
+    q.o.forEach((option,index) => {
 
-        btn.onclick = () => checkAnswer(index, btn);
-
-        options.appendChild(btn);
+        html += `
+        <button class="option" onclick="checkAnswer(${index})">
+        ${String.fromCharCode(65+index)}. ${option}
+        </button>`;
 
     });
+
+    document.getElementById("options").innerHTML = html;
+
+    timer = setInterval(() => {
+
+        time--;
+
+        document.getElementById("timer").innerText = time;
+
+        if(time <= 0) {
+            clearInterval(timer);
+            timeUp();
+        }
+
+    },1000);
+
 }
 
-function checkAnswer(index, button) {
+// CHECK ANSWER
 
-    if (answered) return;
+function checkAnswer(selected) {
+
+    if(answered) return;
 
     answered = true;
+    clearInterval(timer);
 
-    let correct = questions[current].answer;
+    let q = questions[current];
+
     let buttons = document.querySelectorAll(".option");
 
-    buttons.forEach((btn, i) => {
+    buttons.forEach((btn,index) => {
+
         btn.disabled = true;
 
-        if (i === correct) {
+        if(index === q.a) {
             btn.classList.add("correct");
         }
+
+        if(index === selected && selected !== q.a) {
+            btn.classList.add("wrong");
+        }
+
     });
 
-    if (index === correct) {
+    if(selected === q.a) {
+
         score++;
+
+        document.getElementById("feedback").innerText =
+            "✅ Correct Answer! Well Done!";
+
+        document.getElementById("feedback").style.color = "green";
+
     } else {
-        button.classList.add("wrong");
+
+        document.getElementById("feedback").innerText =
+            "❌ Wrong Answer! Correct: " + q.o[q.a];
+
+        document.getElementById("feedback").style.color = "red";
+
     }
 
     document.getElementById("score").innerText =
-        `Score: ${score}`;
+        "Score: " + score;
 
-    document.getElementById("next").disabled = false;
+    document.getElementById("next-btn").style.display = "block";
+
 }
+
+// TIME UP
+
+function timeUp() {
+
+    if(answered) return;
+
+    answered = true;
+
+    let q = questions[current];
+
+    let buttons = document.querySelectorAll(".option");
+
+    buttons.forEach((btn,index) => {
+
+        btn.disabled = true;
+
+        if(index === q.a) {
+            btn.classList.add("correct");
+        }
+
+    });
+
+    document.getElementById("feedback").innerText =
+        "⏰ Time Up! Correct: " + q.o[q.a];
+
+    document.getElementById("feedback").style.color = "red";
+
+    document.getElementById("next-btn").style.display = "block";
+
+}
+
+// NEXT QUESTION
 
 function nextQuestion() {
 
     current++;
 
-    if (current < questions.length) {
-        loadQuestion();
+    if(current < questions.length) {
+        showQuestion();
     } else {
         showResult();
     }
+
 }
+
+// RESULT
 
 function showResult() {
 
-    document.getElementById("quiz").style.display = "none";
-    document.getElementById("result").style.display = "block";
+    clearInterval(timer);
 
-    document.getElementById("finalScore").innerText =
-        `Your Score: ${score}/10`;
+    document.getElementById("quiz-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
 
-    let message = score >= 8
-        ? "Excellent! Amazing Science Knowledge! 🏆"
-        : score >= 5
-        ? "Good Job! Keep Learning! 👍"
-        : "Keep Practicing! You Can Do It! 💪";
+    document.getElementById("progress").style.width = "100%";
 
-    document.getElementById("message").innerText = message;
+    document.getElementById("final-score").innerText =
+        score + "/10";
 
-    document.getElementById("bar").style.width = "100%";
+    let percentage = score * 10;
+
+    let message;
+
+    if(percentage >= 80) {
+        message = "🏆 Excellent! Amazing Work!";
+    } else if(percentage >= 50) {
+        message = "👏 Good Job! Keep Learning!";
+    } else {
+        message = "💪 Keep Practicing!";
+    }
+
+    document.getElementById("result-message").innerText = message;
+
+    document.getElementById("result-detail").innerText =
+        "Your Percentage: " + percentage + "%";
+
 }
-
-function restartQuiz() {
-
-    current = 0;
-    score = 0;
-
-    document.getElementById("quiz").style.display = "block";
-    document.getElementById("result").style.display = "none";
-
-    loadQuestion();
-}
-
-loadQuestion();
 
 </script>
 
